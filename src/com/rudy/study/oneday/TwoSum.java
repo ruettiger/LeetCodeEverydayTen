@@ -1,5 +1,7 @@
 package com.rudy.study.oneday;
 
+import java.util.HashMap;
+
 /*
 1.两数之和
 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -12,17 +14,15 @@ package com.rudy.study.oneday;
  */
 /*
 力扣第一题解题思路：
-1.暴力求解 时间复杂度O(N2) 空间复杂度O(1)
-2.2遍哈希 时间复杂度O(N) 空间复杂度O(N)
+1.暴力求解 时间复杂度O(N²) 空间复杂度O(1)
+2.2遍哈希 时间复杂度O(N) 空间复杂度O(N)，利用containsKey
 3.1遍哈希 时间复杂度O(N) 空间复杂度O(N)
-
 总结：
 1.方法一：暴力求解给出的是遍历一个数组找出不懂数字组合的方法。
 2.
  */
 public class TwoSum {
     public int[] twoSum1(int[] nums, int target) {
-
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
                 if (nums[i] + nums[j] == target) return new int[]{i, j};
@@ -32,12 +32,28 @@ public class TwoSum {
     }
 
     public int[] twoSum2(int[] nums, int target) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            
+            hashMap.put(nums[i], i);
         }
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (hashMap.containsKey(complement) && i != hashMap.get(complement)) {
+                return new int[]{i, hashMap.get(complement)};
+            }
+        }
+        throw new IllegalArgumentException("No two sum solution");
     }
 
     public int[] twoSum3(int[] nums, int target) {
-
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (hashMap.containsKey(complement) && i != hashMap.get(complement)) {
+                return new int[]{i, hashMap.get(complement)};
+            }
+            hashMap.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("No two sum solution");
     }
 }
