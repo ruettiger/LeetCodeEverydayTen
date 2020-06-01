@@ -54,4 +54,19 @@ public class LongestPalindrome {
         }
         return max;
     }
+
+    public int lengthOfLongestSubstring3(String s) {
+        int start = 0;
+        int end = 0;
+        int max = 0;
+        while (end < s.length()) {
+            if (s.substring(start, end).contains(s.substring(end, end + 1))) {
+                start++;
+            } else {
+                end++;
+            }
+            max = Math.max(max, end - start);
+        }
+        return max;
+    }
 }
